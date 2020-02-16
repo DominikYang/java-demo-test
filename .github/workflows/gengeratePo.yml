@@ -11,5 +11,6 @@ jobs:
     steps:
       - name: install maven cli
         uses: xlui/action-maven-cli/jdk8@master
-        args: jsonschema2pojo:generate -f pom.xml
+        with:
+          maven-args: jsonschema2pojo:generate -f pom.xml
 
