@@ -21,6 +21,8 @@ public class JsonSchema2PojoTest {
             public boolean isGenerateBuilders() { // set config option by overriding method
                 return true;
             }
+
+
         };
 
         SchemaMapper mapper = new SchemaMapper(new RuleFactory(config, new Jackson2Annotator(config), new SchemaStore()), new SchemaGenerator());
