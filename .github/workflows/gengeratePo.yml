@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: install maven cli
-        uses: comchangs/action-maven@master
+        uses: qcastel/github-actions-maven/actions/maven@master
         with:
           maven-args: jsonschema2pojo:generate -f pom.xml
 
