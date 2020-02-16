@@ -1,0 +1,15 @@
+name: 'generate java code by schema'
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  generate-java-code:
+    runs-on: ubuntu-latest
+    steps:
+      - name: install maven cli
+        uses: xlui/action-maven-cli/jdk8@master
+        args: jsonschema2pojo:generate -f pom.xml
+
