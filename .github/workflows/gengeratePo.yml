@@ -1,7 +1,7 @@
 name: 'generate java code by schema'
 
 on:
-  push:
+  pull:
     branches:
       - master
 
