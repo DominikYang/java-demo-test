@@ -26,10 +26,10 @@ jobs:
     - name: git add
       run: git add -A
     - name: Commit files
-        run:
-          git config --local user.email "453822487@qq.com"
-          git config --local user.name "DominikYang"
-          git commit -m "Add changes" -a
+      run: |
+        git config --local user.email "453822487@qq.com"
+        git config --local user.name "DominikYang"
+        git commit -m "Add changes" -a
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
