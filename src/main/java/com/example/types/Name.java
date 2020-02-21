@@ -14,10 +14,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({
     "foo",
     "bar",
-    "baz",
-    "baz2"
+    "baz"
 })
-public class Upload {
+public class Name {
 
     @JsonProperty("foo")
     private String foo;
@@ -25,8 +24,6 @@ public class Upload {
     private Integer bar;
     @JsonProperty("baz")
     private Boolean baz;
-    @JsonProperty("baz2")
-    private Boolean baz2;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -60,16 +57,6 @@ public class Upload {
         this.baz = baz;
     }
 
-    @JsonProperty("baz2")
-    public Boolean getBaz2() {
-        return baz2;
-    }
-
-    @JsonProperty("baz2")
-    public void setBaz2(Boolean baz2) {
-        this.baz2 = baz2;
-    }
-
     @JsonAnyGetter
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
@@ -83,7 +70,7 @@ public class Upload {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(Upload.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(Name.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("foo");
         sb.append('=');
         sb.append(((this.foo == null)?"<null>":this.foo));
@@ -95,10 +82,6 @@ public class Upload {
         sb.append("baz");
         sb.append('=');
         sb.append(((this.baz == null)?"<null>":this.baz));
-        sb.append(',');
-        sb.append("baz2");
-        sb.append('=');
-        sb.append(((this.baz2 == null)?"<null>":this.baz2));
         sb.append(',');
         sb.append("additionalProperties");
         sb.append('=');
@@ -115,7 +98,6 @@ public class Upload {
     @Override
     public int hashCode() {
         int result = 1;
-        result = ((result* 31)+((this.baz2 == null)? 0 :this.baz2 .hashCode()));
         result = ((result* 31)+((this.bar == null)? 0 :this.bar.hashCode()));
         result = ((result* 31)+((this.baz == null)? 0 :this.baz.hashCode()));
         result = ((result* 31)+((this.additionalProperties == null)? 0 :this.additionalProperties.hashCode()));
@@ -128,11 +110,11 @@ public class Upload {
         if (other == this) {
             return true;
         }
-        if ((other instanceof Upload) == false) {
+        if ((other instanceof Name) == false) {
             return false;
         }
-        Upload rhs = ((Upload) other);
-        return ((((((this.baz2 == rhs.baz2)||((this.baz2 != null)&&this.baz2 .equals(rhs.baz2)))&&((this.bar == rhs.bar)||((this.bar!= null)&&this.bar.equals(rhs.bar))))&&((this.baz == rhs.baz)||((this.baz!= null)&&this.baz.equals(rhs.baz))))&&((this.additionalProperties == rhs.additionalProperties)||((this.additionalProperties!= null)&&this.additionalProperties.equals(rhs.additionalProperties))))&&((this.foo == rhs.foo)||((this.foo!= null)&&this.foo.equals(rhs.foo))));
+        Name rhs = ((Name) other);
+        return (((((this.bar == rhs.bar)||((this.bar!= null)&&this.bar.equals(rhs.bar)))&&((this.baz == rhs.baz)||((this.baz!= null)&&this.baz.equals(rhs.baz))))&&((this.additionalProperties == rhs.additionalProperties)||((this.additionalProperties!= null)&&this.additionalProperties.equals(rhs.additionalProperties))))&&((this.foo == rhs.foo)||((this.foo!= null)&&this.foo.equals(rhs.foo))));
     }
 
 }
