@@ -1,7 +1,7 @@
 spring:
   datasource:
     username: root
-    password:
+    password: 999Iamtinydust
     url: jdbc:mysql://localhost:3306/demo?characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
   redis:

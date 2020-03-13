@@ -12,7 +12,7 @@ import lombok.Setter;
 public class CodeMessage {
 
     public static final Integer PARAM_ERROR = 1;
-    public static final CodeMessage SUCCESS = new CodeMessage(0, "成功");
+    public static final CodeMessage SUCCESS = new CodeMessage(200, "成功");
     public static final CodeMessage GENERATE_CAPTCHA_FAIL = new CodeMessage(2, "生成验证码失败");
     public static final CodeMessage CLOSE_IMAGE_OUTPUT_STREAM_FAIL = new CodeMessage(3, "关闭图像流失败");
     public static final CodeMessage USER_ACCOUNT_LOCKED = new CodeMessage(4,"该账号已被冻结");

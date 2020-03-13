@@ -27,17 +27,25 @@ public class UserServiceImpl implements UserService {
         this.userDao = userDao;
     }
 
+
+    //TODO:加密操作还没写，功能不全
     @Override
     public User login(LoginVO loginVO) throws GlobalException {
         String userName = loginVO.getUserName();
         UserExample userExample = new UserExample();
         if(userName.length() == 0 || userName == null){
-            userExample.createCriteria().andPhoneNumberEqualTo(loginVO.getPhoneNumber()).andPasswordEqualTo(loginVO.getPassword());
+            userExample.createCriteria().andPhoneNumberEqualTo(loginVO.getPhoneNumber());
             List<User> users = userDao.selectByExample(userExample);
             if(users.size() == 0){
                 throw new GlobalException(CodeMessage.USER_NOT_EXIST);
             }
-            return users.get(0);
+
+            User user = users.get(0);
+            if(user.getPassword().equals(loginVO.getPassword())){
+                return user;
+            }else {
+                throw new GlobalException(CodeMessage.USER_NOT_EXIST);
+            }
         }else {
             userExample.createCriteria().andUsernameEqualTo(loginVO.getUserName()).andPasswordEqualTo(loginVO.getPassword());
             List<User> users = userDao.selectByExample(userExample);

@@ -1,5 +1,7 @@
 package com.example.springboot.controller;
 
+import com.example.springboot.annotation.IgnoreResponseAdvice;
+import com.example.springboot.dto.SimpleResult;
 import com.example.springboot.entity.User;
 import com.example.springboot.exception.GlobalException;
 import com.example.springboot.service.UserService;
@@ -32,11 +34,16 @@ public class UserController {
      * @author: Wei Yuyang
      * @time: 2020.03.12
      */
+    @IgnoreResponseAdvice
     @PostMapping("/login")
-    public User login(@RequestBody LoginVO loginVO) throws GlobalException {
+    public SimpleResult login(@RequestBody LoginVO loginVO) throws GlobalException {
         System.out.println(loginVO.toString());
         User login = userService.login(loginVO);
-        return login;
+        if(login != null){
+            return new SimpleResult(true);
+        }else {
+            return new SimpleResult(false);
+        }
     }
 
 }
