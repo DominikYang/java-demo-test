@@ -6,6 +6,7 @@ import com.example.springboot.entity.User;
 import com.example.springboot.entity.UserExample;
 import com.example.springboot.exception.GlobalException;
 import com.example.springboot.service.UserService;
+import com.example.springboot.util.PasswordEncryptor;
 import com.example.springboot.vo.LoginVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,20 +40,26 @@ public class UserServiceImpl implements UserService {
             if(users.size() == 0){
                 throw new GlobalException(CodeMessage.USER_NOT_EXIST);
             }
-
             User user = users.get(0);
-            if(user.getPassword().equals(loginVO.getPassword())){
+            PasswordEncryptor passwordEncryptor = new PasswordEncryptor(user.getSalt(), "sha-256");
+            if(passwordEncryptor.isPasswordValid(user.getPassword(),loginVO.getPassword())){
                 return user;
             }else {
                 throw new GlobalException(CodeMessage.USER_NOT_EXIST);
             }
         }else {
-            userExample.createCriteria().andUsernameEqualTo(loginVO.getUserName()).andPasswordEqualTo(loginVO.getPassword());
+            userExample.createCriteria().andUsernameEqualTo(loginVO.getUserName());
             List<User> users = userDao.selectByExample(userExample);
             if(users.size() == 0){
                 throw new GlobalException(CodeMessage.USER_NOT_EXIST);
             }
-            return users.get(0);
+            User user = users.get(0);
+            PasswordEncryptor passwordEncryptor = new PasswordEncryptor(user.getSalt(), "sha-256");
+            if(passwordEncryptor.isPasswordValid(user.getPassword(),loginVO.getPassword())){
+                return user;
+            }else {
+                throw new GlobalException(CodeMessage.USER_NOT_EXIST);
+            }
         }
     }
 }
