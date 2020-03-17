@@ -8,10 +8,12 @@ import com.example.springboot.exception.GlobalException;
 import com.example.springboot.service.UserService;
 import com.example.springboot.util.PasswordEncryptor;
 import com.example.springboot.vo.LoginVO;
+import com.example.springboot.vo.SignupVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Wei yuyaung
@@ -60,6 +62,38 @@ public class UserServiceImpl implements UserService {
             }else {
                 throw new GlobalException(CodeMessage.USER_NOT_EXIST);
             }
+        }
+
+
+    }
+
+    /**
+     * description: 注册用户
+     * @param signupVo
+     * @return
+     * @throws GlobalException
+     */
+    @Override
+    public int signup(SignupVo signupVo) throws GlobalException {
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andUsernameEqualTo(signupVo.getUserName());
+        List<User> users = userDao.selectByExample(userExample);
+        UserExample userExample2 = new UserExample();
+        userExample2.createCriteria().andPhoneNumberEqualTo(signupVo.getPhoneNumber());
+        List<User> users2 = userDao.selectByExample(userExample2);
+        if (users.size() ==0 && users2.size() ==0){
+            User user=new User();
+            user.setPhoneNumber(signupVo.getPhoneNumber());
+            user.setUsername(signupVo.getUserName());
+            String salt= UUID.randomUUID().toString().replace("-","");
+            user.setSalt(salt);
+            PasswordEncryptor passwordEncryptor=new PasswordEncryptor(salt,"sha-256");
+            user.setPassword(passwordEncryptor.encode(signupVo.getPassword()));
+            user.setNickName(signupVo.getUserName());
+            int insert = userDao.insert(user);
+            return insert;
+        } else {
+            throw new GlobalException(CodeMessage.SAME_USER_ACCOUNT);
         }
     }
 }
