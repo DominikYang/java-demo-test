@@ -6,6 +6,7 @@ import com.example.springboot.entity.User;
 import com.example.springboot.exception.GlobalException;
 import com.example.springboot.service.UserService;
 import com.example.springboot.vo.LoginVO;
+import com.example.springboot.vo.SignupVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,4 +47,20 @@ public class UserController {
         }
     }
 
+    /**
+     * description: 用户注册
+     * @param signupVo
+     * @return
+     * @throws GlobalException
+     */
+    @IgnoreResponseAdvice
+    @PostMapping("/signup")
+    public SimpleResult signup(@RequestBody SignupVo signupVo) throws GlobalException {
+        int signup = userService.signup(signupVo);
+        if (signup>0){
+            return new SimpleResult(true);
+        }else {
+            return new SimpleResult(false);
+        }
+    }
 }
