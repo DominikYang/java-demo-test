@@ -8,7 +8,7 @@ import com.example.springboot.exception.GlobalException;
 import com.example.springboot.service.UserService;
 import com.example.springboot.util.PasswordEncryptor;
 import com.example.springboot.vo.LoginVO;
-import com.example.springboot.vo.SignupVo;
+import com.example.springboot.vo.SignupVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
      * @throws GlobalException
      */
     @Override
-    public int signup(SignupVo signupVo) throws GlobalException {
+    public int signup(SignupVO signupVo) throws GlobalException {
         UserExample userExample = new UserExample();
         userExample.createCriteria().andUsernameEqualTo(signupVo.getUserName());
         List<User> users = userDao.selectByExample(userExample);
