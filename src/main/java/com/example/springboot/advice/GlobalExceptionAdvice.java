@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Path;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author lgq
@@ -32,4 +37,17 @@ public class GlobalExceptionAdvice {
 
     }
 
+    /**
+     * 捕获数据校验失败的异常
+     * 将校验失败的原因封装入data
+     * @param e 字段校验失败的异常
+     * @return 值中的data为异常的原因
+     */
+    @ExceptionHandler(ConstraintViolationException.class)
+    public BaseResult<Map<Path, String>> handlerException(ConstraintViolationException e){
+        Map<Path, String> collect = e.getConstraintViolations().stream()
+                .collect(Collectors.toMap(ConstraintViolation::getPropertyPath, ConstraintViolation::getMessage));
+        return new BaseResult<>(CodeMessage.BAD_REQUEST.getCode(),
+                CodeMessage.BAD_REQUEST.getMessage(),collect);
+    }
 }
