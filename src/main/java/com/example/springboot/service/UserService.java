@@ -3,6 +3,9 @@ package com.example.springboot.service;
 import com.example.springboot.entity.User;
 import com.example.springboot.exception.GlobalException;
 import com.example.springboot.vo.LoginVO;
+import com.example.springboot.vo.SignupVO;
+
+import javax.validation.Valid;
 
 public interface UserService {
 
@@ -11,6 +14,6 @@ public interface UserService {
      * @author: Wei Yuyang
      * @time: 2020.03.12
      */
-    User login(LoginVO loginVO) throws GlobalException;
-
+    User login(@Valid LoginVO loginVO) throws GlobalException;
+    int signup(@Valid SignupVO signupVo) throws GlobalException;
 }
