@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import javax.validation.Path;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * @author lgq
@@ -44,9 +43,11 @@ public class GlobalExceptionAdvice {
      * @return 值中的data为异常的原因
      */
     @ExceptionHandler(ConstraintViolationException.class)
-    public BaseResult<Map<Path, String>> handlerException(ConstraintViolationException e){
-        Map<Path, String> collect = e.getConstraintViolations().stream()
-                .collect(Collectors.toMap(ConstraintViolation::getPropertyPath, ConstraintViolation::getMessage));
+    public BaseResult<Map<String, String>> handlerException(ConstraintViolationException e){
+        Map<String, String> collect=new HashMap<>();
+        for (ConstraintViolation<?> constraintViolation : e.getConstraintViolations()) {
+            collect.put(constraintViolation.getPropertyPath().toString().split("\\.")[2],constraintViolation.getMessage());
+        }
         return new BaseResult<>(CodeMessage.BAD_REQUEST.getCode(),
                 CodeMessage.BAD_REQUEST.getMessage(),collect);
     }
